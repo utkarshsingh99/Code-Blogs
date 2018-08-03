@@ -1,0 +1,72 @@
+.nav{
+  height: 100px;
+  width: 100%
+}
+
+#title-page{
+  margin-top: 55px;
+  margin-left: -80px;
+  /* margin-left: 21px; */
+}
+
+#log-in {
+  text-align: right;
+  margin-left: 149px;
+  margin-top: 59px;
+  background: transparent;
+  border: 0;;
+}
+
+#log-in:hover {
+  background: #FF8C00;
+  color: white;
+}
+
+.quote {
+  text-align: center; */
+  quote: """ """;
+  margin-left: 185px;
+  margin-top: 149px;
+}
+
+.about-site {
+  text-align: center;
+  width: 100%;
+  margin-left: 55px;
+  margin-top: 55px;
+  display: flex;
+  justify-content: center;
+  line-height: 50px;
+  font-family: serif;
+  font-size: 16px;
+}
+
+#sign-up {
+  background: #FF8C00;
+  margin-left: 857px;
+  margin-top: 185px;
+  height: 69px;
+  width: 229px;
+  font-size: 23px;
+  border: 0;
+  box-shadow: 1px 1px;
+}
+
+#sign-up:hover{
+  background: white;
+  color: #FF8C00;
+}
+
+body {
+  background: url('../images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow-x: hidden;
+}
+
+a:link{
+  color: inherit;
+}
+
+a:visited {
+  color: inherit;
+}

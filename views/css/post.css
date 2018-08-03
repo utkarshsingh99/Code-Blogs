@@ -1,0 +1,24 @@
+body {
+  background-color: #00FFFF; /* Not Working */
+}
+
+.nav{
+  height: 100px;
+  width: 100%
+}
+
+#title-page{
+  margin-top: 55px;
+  margin-left: -80px;
+  /* margin-left: 21px; */
+}
+
+#postIt {
+    height: 50px;
+    width: 30%;
+    margin-top: 30px;
+}
+
+.text-area {
+  font-size: 21px;
+}

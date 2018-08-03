@@ -1,0 +1,29 @@
+.nav{
+  height: 100px;
+  width: 100%
+}
+
+#title-page{
+  margin-top: 55px;
+  margin-left: -80px;
+  /* margin-left: 21px; */
+}
+
+#log-in {
+  text-align: right;
+  margin-left: 149px;
+  margin-top: 59px;
+  background: transparent;
+  border: 0;;
+}
+
+#log-in:hover {
+  background: #FF8C00;
+  color: white;
+}
+
+#newPost {
+  height: 50px;
+  width: 30%;
+  font-size: 17px;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/signup.css">
+    <title>Get Started</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <img class="portrait" src="../images/sign-up.jpg" alt="Bloginspiration">
+        </div>
+        <div class="col-md-4">
+          <h1 class="center-content sign-quote">Blog like no one is reading.<br>
+          Blog for yourself.</h1>
+          <h1 class="center-content" style="margin-top: 59px; margin-left: 79px;"><big>Sign Up</big></h1>
+          <form id="signupForm" class="center-content form-class">
+            <ul>
+              <li>
+                <label for="name">Enter Name</label>
+                <input id="name" type="text" placeholder="Full Name" value="" autocomplete="off" autofocus/>
+              </li>
+              <li>
+                <label for="username">Enter a Username</label>
+                <input type="text" id="username" placeholder="Something that you'll be known for" value="" autocomplete="off">
+              </li>
+              <li>
+                <label for="email">Enter your Email</label>
+                <input type="text" id="email" placeholder="something@example.com" autocomplete="off">
+              </li>
+              <li>
+                <label for="password">Enter Password</label><br>
+                <input type="text" id="password" placeholder="A combination of letters and numbers" value="" autocomplete="off"><br>
+              </li>
+              <li>
+                <label for="repassword">Enter Password again</label><br>
+                <input type="text" id="passwordAgain" placeholder="Confirm Password" value="" autocomplete="off"><br>
+              </li>
+              <li>
+                <input type="button" id="submitButton" value="Submit">
+              </li>
+            </ul>
+          </form>
+          <!-- <button id="submitButton" class="center-content">Submit</button> -->
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="/js/signup.js"></script>
+</html>
