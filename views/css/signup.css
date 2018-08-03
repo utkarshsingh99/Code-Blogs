@@ -21,6 +21,13 @@ img {
   text-align: center;
 }
 
+.errorMessage {
+  margin-left: 80px;
+  color: red;
+  font-size: 15px;
+  display: none;
+}
+
 .form-class {
   margin-left: 200px;
   margin-top: 55px;

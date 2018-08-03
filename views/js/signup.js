@@ -20,6 +20,7 @@ function validate() {
   if(!email.includes('.com')) {
     return alert('Email is not valid!');
   }
+
   var signUpData = {
     name,
     username,
@@ -29,7 +30,11 @@ function validate() {
 
   socket.emit('signup', signUpData);
 
-  socket.on('changeToDashboard', (data) => {
+  socket.on('userExists', function (data) {
+    $('.errorMessage').css("display", "block");
+  });
+
+  socket.on('changeToDashboard', function (data) {
     window.location.href='/dashboard';
   });
 

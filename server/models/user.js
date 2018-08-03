@@ -24,6 +24,10 @@ var Users = new mongoose.Schema({
     trim: true,
     required: true,
     minlength: 1
+  },
+  numberOfPosts: {
+    type: Number,
+    default: 0
   }
 });
 

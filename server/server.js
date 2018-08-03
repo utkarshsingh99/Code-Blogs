@@ -9,7 +9,6 @@ const http = require('http');
 const {ObjectID} = require('mongodb');
 var {mongoose} = require('./db/mongoose');
 var {User} = require('./models/user');
-var {bigString} = require('./utils/dashboard');
 
 var app = express();
 var path1 = path.join(__dirname,'..', 'views');
@@ -23,6 +22,16 @@ hbs.registerPartials(path2);
 app.use(express.static(path1));
 
 var loggedIn = false;
+const secret = 'dontchangethis';
+var currentUser = {
+  name: "",
+  numberOfPosts: 0
+}
+
+function addUserCredentials(user) {
+  currentUser.name = user.name;
+  currentUser.numberOfPosts = user.numberOfPosts;
+}
 
 app.get('/', (req, res) => {
   res.render('home');
@@ -35,19 +44,55 @@ io.on('connection', (socket) => {
     console.log(`Socket server accepted`);
       User.findOne({username: userData.username}, (e, docs) => {
         if(docs) {
-          console.log(docs);
+          socket.emit('userExists');
         } else {
+          user.password = crypto.createHmac('sha256', user.password).update(secret).digest('hex');
+          addUserCredentials(user);
           user.save();
           socket.emit('changeToDashboard', {location: '/dashboard'});
           loggedIn = true;
         }
       });
   });
+
+  socket.on('login', (userData) => {
+    var user = new User(userData);
+    User.findOne({username: userData.username}, (e, docs) => {
+      if(docs) {
+        console.log(`Username Matches`);
+        user.password = crypto.createHmac('sha256', user.password).update(secret).digest('hex');
+        if(docs.password === user.password) {
+          addUserCredentials(docs);
+          socket.emit('changeToDashboard', {location: '/dashboard'});
+          loggedIn = true;
+        } else {
+          socket.emit('wrongPassword');
+        }
+      } else {
+        socket.emit('noUser');
+      }
+    });
+  });
+
+  socket.on('signOut', (userData) => {
+    loggedIn = false;
+    user = {
+      name: "",
+      numberOfPosts: 0
+    };
+    addUserCredentials(user);
+    socket.emit('redirectHome');
+  });
 });
 
 app.get('/dashboard', (req, res) => {
   if(loggedIn) {
-    res.render('dashboard');
+    res.render('dashboard', {
+      name: currentUser.name,
+      numberOfPosts: currentUser.numberOfPosts
+    });
+  } else {
+      res.sendStatus(404);
   }
 });
 
@@ -55,7 +100,19 @@ app.get('/signup', (req, res) => {
   res.render('signup');
 });
 
+app.get('/login', (req, res) => {
+  res.render('login');
+});
 
+app.get('/postc', (req, res) => {
+  res.render('postc');
+});
+
+server.listen(3000, () => {
+  console.log(`Port up and running`);
+});
+
+/* TODO: Block Sign Up and Login page once user is logged In */
 
 // app.post('/validate', (req, res) => {
 //     // var user = new User(req.body);
@@ -71,44 +128,3 @@ app.get('/signup', (req, res) => {
 //        });
 //     });
 // });
-
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-app.get('/postc', (req, res) => {
-  res.render('postc');
-});
-
-server.listen(3000, () => {
-  console.log(`Port up and running`);
-});
-
-
-// passport.use(new LocalStrategy(
-//   function (name, username, email, password, done) {
-//     User.find({ where: {email: email} }).success(function (user) {
-//       if(!user) {
-//         var today = new Date();
-//         var salt = today.getTime();
-//
-//         var newPass = crypto.hashPassword(password, salt);
-//
-//         var user = User.build({
-//           email,
-//           username,
-//           name,
-//           password: newPass
-//         });
-//
-//         user.save().success(function (savedUser) {
-//           console.log(`Saved user: ${savedUser}`);
-//           return done(null, savedUser);
-//         }).error((e) => {
-//           console.log(e);
-//           return done(null, false, {message: 'Something went wrong'});
-//         });
-//       }
-//     })
-//   }
-// ));

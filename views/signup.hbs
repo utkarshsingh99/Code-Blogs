@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/signup.css">
     <title>Get Started</title>
   </head>
@@ -17,6 +17,7 @@
           <h1 class="center-content sign-quote">Blog like no one is reading.<br>
           Blog for yourself.</h1>
           <h1 class="center-content" style="margin-top: 59px; margin-left: 79px;"><big>Sign Up</big></h1>
+          <h4 class="center-content errorMessage">Sorry, User already exists</h4>
           <form id="signupForm" class="center-content form-class">
             <ul>
               <li>
@@ -33,18 +34,17 @@
               </li>
               <li>
                 <label for="password">Enter Password</label><br>
-                <input type="text" id="password" placeholder="A combination of letters and numbers" value="" autocomplete="off"><br>
+                <input type="password" id="password" placeholder="A combination of letters and numbers" value="" autocomplete="off"><br>
               </li>
               <li>
                 <label for="repassword">Enter Password again</label><br>
-                <input type="text" id="passwordAgain" placeholder="Confirm Password" value="" autocomplete="off"><br>
+                <input type="password" id="passwordAgain" placeholder="Confirm Password" value="" autocomplete="off"><br>
               </li>
               <li>
                 <input type="button" id="submitButton" value="Submit">
               </li>
             </ul>
           </form>
-          <!-- <button id="submitButton" class="center-content">Submit</button> -->
         </div>
       </div>
     </div>
