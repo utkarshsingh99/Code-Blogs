@@ -28,6 +28,10 @@ var Users = new mongoose.Schema({
   numberOfPosts: {
     type: Number,
     default: 0
+  },
+  img: {
+    data: Buffer,
+    contentType: String
   }
 });
 

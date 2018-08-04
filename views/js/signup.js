@@ -30,6 +30,8 @@ function validate() {
 
   socket.emit('signup', signUpData);
 
+  // socket.emit('addImage', signUpData);     // TODO: Profile Pic addition
+
   socket.on('userExists', function (data) {
     $('.errorMessage').css("display", "block");
   });

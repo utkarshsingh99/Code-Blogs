@@ -5,6 +5,7 @@ const socketIO = require('socket.io');
 const bodyParser = require('body-parser');
 const crypto =require('crypto');
 const http = require('http');
+const fs = require('fs');
 
 const {ObjectID} = require('mongodb');
 var {mongoose} = require('./db/mongoose');
@@ -13,6 +14,9 @@ var {User} = require('./models/user');
 var app = express();
 var path1 = path.join(__dirname,'..', 'views');
 var path2 = path.join(__dirname, '..', 'views', 'partials');
+
+var WebimgPath = '/images/profile.jpg';
+var imgPath = path.join(__dirname, '..', 'views', 'images', 'profile.jpg');
 
 var server = http.createServer(app);
 var io = socketIO(server);
@@ -49,8 +53,8 @@ io.on('connection', (socket) => {
           user.password = crypto.createHmac('sha256', user.password).update(secret).digest('hex');
           addUserCredentials(user);
           user.save();
-          socket.emit('changeToDashboard', {location: '/dashboard'});
           loggedIn = true;
+          socket.emit('changeToDashboard', {location: '/dashboard'});
         }
       });
   });
@@ -72,6 +76,18 @@ io.on('connection', (socket) => {
         socket.emit('noUser');
       }
     });
+
+    socket.on('addImage', (userData) => {
+      var user = new User(userData);
+      User.findOne({username: userData.username}, (e, docs) => {
+        if(docs) {
+          // TODO: Upload Image Code
+          user.img.data = fs.readFileSync(imgPath);
+          user.img.contentType = 'image/png';
+          user.save();
+        }
+      });
+    })
   });
 
   socket.on('signOut', (userData) => {
@@ -83,13 +99,15 @@ io.on('connection', (socket) => {
     addUserCredentials(user);
     socket.emit('redirectHome');
   });
+
 });
 
 app.get('/dashboard', (req, res) => {
   if(loggedIn) {
     res.render('dashboard', {
       name: currentUser.name,
-      numberOfPosts: currentUser.numberOfPosts
+      numberOfPosts: currentUser.numberOfPosts,
+      imgPath : WebimgPath
     });
   } else {
       res.sendStatus(404);
@@ -105,7 +123,10 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/postc', (req, res) => {
-  res.render('postc');
+  socket.emit('post', currentUser);
+  res.render('postc', {
+    name: currentUser.name
+  });
 });
 
 server.listen(3000, () => {
@@ -113,18 +134,3 @@ server.listen(3000, () => {
 });
 
 /* TODO: Block Sign Up and Login page once user is logged In */
-
-// app.post('/validate', (req, res) => {
-//     // var user = new User(req.body);
-//     var user = req.body;
-//     users.create(user ,function(err, data){
-//       users.findOne({username: user.username}, (e, docs) => {
-//         if(docs) {
-//           console.log(docs);
-//         } else {
-//           data.save();
-//           res.send('One');
-//         }
-//        });
-//     });
-// });
