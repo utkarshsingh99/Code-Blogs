@@ -32,6 +32,20 @@ var Users = new mongoose.Schema({
   img: {
     data: Buffer,
     contentType: String
+  },
+  posts: {
+    type: [postSchema]
+  }
+});
+
+var postSchema = new mongoose.Schema({
+  post: {
+    type: String,
+    default: ""
+  },
+  postTitle: {
+    type: String,
+    default: ""
   }
 });
 

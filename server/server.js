@@ -29,12 +29,18 @@ var loggedIn = false;
 const secret = 'dontchangethis';
 var currentUser = {
   name: "",
-  numberOfPosts: 0
+  username: "",
+  numberOfPosts: 0,
+  posts: {
+    post: "",
+    postTitle: ""
+  }
 }
 
 function addUserCredentials(user) {
   currentUser.name = user.name;
   currentUser.numberOfPosts = user.numberOfPosts;
+  currentUser.username = user.username;
 }
 
 app.get('/', (req, res) => {
@@ -63,7 +69,6 @@ io.on('connection', (socket) => {
     var user = new User(userData);
     User.findOne({username: userData.username}, (e, docs) => {
       if(docs) {
-        console.log(`Username Matches`);
         user.password = crypto.createHmac('sha256', user.password).update(secret).digest('hex');
         if(docs.password === user.password) {
           addUserCredentials(docs);
@@ -96,10 +101,22 @@ io.on('connection', (socket) => {
       name: "",
       numberOfPosts: 0
     };
-    addUserCredentials(user);
+    addUserCredentials(user);     //Resets currentUser Object
     socket.emit('redirectHome');
   });
 
+  socket.on('postData', (data) => {
+    console.log(data);
+    var user = data;
+    User.findOne({username: user.username}, (e, docs) => {
+      docs.posts.push(user.posts);
+      docs.save();
+      currentUser.posts = docs.posts;
+      socket.emit('afterPost', user);
+    });
+  });
+
+  // socket.emit('post', currentUser);
 });
 
 app.get('/dashboard', (req, res) => {
@@ -107,7 +124,8 @@ app.get('/dashboard', (req, res) => {
     res.render('dashboard', {
       name: currentUser.name,
       numberOfPosts: currentUser.numberOfPosts,
-      imgPath : WebimgPath
+      imgPath : WebimgPath,
+      posts: currentUser.posts
     });
   } else {
       res.sendStatus(404);
@@ -123,10 +141,14 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/postc', (req, res) => {
-  socket.emit('post', currentUser);
-  res.render('postc', {
-    name: currentUser.name
+  io.on('connection', (socket) => {
+    socket.emit('post', currentUser);
   });
+  if(loggedIn){
+    res.render('postc', {
+      name: currentUser.name
+    });
+  }
 });
 
 server.listen(3000, () => {
