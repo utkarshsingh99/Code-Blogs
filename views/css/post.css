@@ -1,5 +1,4 @@
 body {
-  background-color: #00FFFF; /* Not Working */
 }
 
 .nav{
@@ -15,7 +14,7 @@ body {
 
 #postIt {
     height: 50px;
-    width: 30%;
+    width: 40%;
     margin-top: 30px;
 }
 

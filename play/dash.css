@@ -36,18 +36,9 @@
   color: white;
 }
 
-h3 {
-  font-weight: bold;
-}
-
-h4 {
-  color: #2f4f4f;
-}
-
 .single-post {
-  margin-top: 18px;
   padding: 15px;
-  box-shadow: 1px 1px 7px rgb(10,48,78);
+  box-shadow: 2px 2px grey;
 }
 
 ul {

@@ -7,3 +7,7 @@ function signOut () {
       window.location.href = '/';
     });
 }
+
+socket.on('dashboardPosts', function (data) {
+
+});

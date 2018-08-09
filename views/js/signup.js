@@ -14,7 +14,7 @@ function validate() {
   if(password.length < 6){
     return alert('Password length should be at least 6 characters');
   }
-  if(/^[a-zA-Z0-9- ]*$/.test(password) == false) {
+  if(/^[a-zA-Z0-9- ]*$/.test(password) !== false) {
     return alert('Password should contain at least one special character');
   }
   if(!email.includes('.com')) {
