@@ -14,7 +14,6 @@ Fully functional Blogging Site
 - Profile Pic and Image addition feature
 - Delete and Modify Posts
 - Newsfeed
-- Better Dashboard UI
 
 ## Contribute
 
