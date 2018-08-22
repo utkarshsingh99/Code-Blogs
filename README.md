@@ -9,12 +9,6 @@ Fully functional Blogging Site
 - Express and Socket powered requests function within site.
 - All routes such as Profile Dashboard and Post page are private routes and can only be accessed after Signing Up or Login
 
-## Coming Soon
-
-- Profile Pic and Image addition feature
-- Delete and Modify Posts
-- Newsfeed
-
 ## Contribute
 
 - UI/UX of the site is still in development. Please make changes only in 'views' folder of the site for front-end development ONLY.  
